@@ -31,7 +31,7 @@ export default {
           if (this.capacitySelected == "100") {
             capacity = element.capacity <= 100;
           } else if (this.capacitySelected == "500") {
-            capacity = element.capacity > 100 && element.capacity >= 500;
+            capacity = element.capacity > 100 && element.capacity <= 500;
           } else {
             capacity = element.capacity > "500";
           }
