@@ -1,6 +1,7 @@
 <script>
 import "./style.css";
 import { Api } from "./components/PlanesAPI";
+import * as XLSX from "xlsx";
 export default {
   methods: {
     onCall() {
@@ -14,6 +15,22 @@ export default {
     getData() {
       this.orginalData = Api;
       this.PlanesData = Api;
+    },
+
+    // this is json - excel logic
+    onClickDownload(){
+      try{
+        // json to sheets
+        const worksheet = XLSX.utils.json_to_sheet(this.PlanesData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Planes-filtered");
+        XLSX.writeFile(workbook, "Planes.xlsx");
+        console.log('called')
+      }
+      catch(error){
+        console.log('error',error)
+      }
+
     },
 
     // fuction to filter both based on text and drop down
@@ -95,6 +112,9 @@ export default {
       </button>
       <button @click="onCall" class="btn btn-danger" type="button">
         Reset
+      </button>
+      <button @click="onClickDownload" class="btn btn-danger" type="button">
+        Download excel
       </button>
     </section>
     <section class="planes-container">
